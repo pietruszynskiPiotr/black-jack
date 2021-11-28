@@ -7,40 +7,29 @@ import es.ulpgc.players.Player;
 import es.ulpgc.players.PlayerAbstract;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 @Service
-public class Game {
+public class GameService {
 
     public PlayerAbstract[] getWinners(Player player1, Player player2, Player player3, Croupier croupier, Deck deck) {
         List<PlayerAbstract> players = List.of(player1, player2, player3, croupier);
         List<BlackJackCard> cards = deck.getCards();
-        IntStream.of(1, cards.size())
-                .forEach(
-                        i -> {
-                            PlayerAbstract player = players.get(i);
-                            if (!player.hasBlackJack()) {
-                                if (player.isCroupier()) {
-                                    Croupier player4 = (Croupier) player;
-                                    if (player4.canGetCard()) {
-                                        addCard(cards, i, player);
-                                    }
-                                } else {
-                                    addCard(cards, i, player);
-                                }
-
-                            }
-                        }
-                );
-
-
-        return null;
+        List<PlayerAbstract> winners = new ArrayList<>();
+        for (int i = 0; i < players.size(); i++) {
+            PlayerAbstract player = players.get(i);
+            if (!player.hasBlackJack()) {
+                BlackJackCard card = cards.get(i);
+                player.addCard(card);
+            }
+            if (player.hasBlackJack()) {
+                winners.add(player);
+            }
+        }
+        return winners.toArray(new PlayerAbstract[0]);
     }
 
-    private void addCard(List<BlackJackCard> cards, int i, PlayerAbstract player) {
-        BlackJackCard card = cards.get(i);
-        player.addCard(card);
-    }
+
 
 }

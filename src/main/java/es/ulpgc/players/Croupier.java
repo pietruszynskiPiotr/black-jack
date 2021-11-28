@@ -1,9 +1,14 @@
-package players;
+package es.ulpgc.players;
 
-public class Croupier extends PlayerAbstract {
+import es.ulpgc.deck.BlackJackCard;
 
-    @Override
-    public Boolean hasBlackJack() {
-        return null;
+import java.util.Set;
+
+final public class Croupier extends PlayerAbstract {
+
+    public Croupier(final String name,
+                    final Set<BlackJackCard> cards) {
+        super(name, cards);
     }
+
 }

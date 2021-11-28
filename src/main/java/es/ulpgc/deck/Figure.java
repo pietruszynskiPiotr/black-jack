@@ -1,30 +1,39 @@
-package deck;
+package es.ulpgc.deck;
 
+import lombok.Getter;
+
+@Getter
 public enum Figure {
 
-    ACE,
+    TWO(2),
 
-    TWO,
+    THREE(3),
 
-    THREE,
+    FOUR(4),
 
-    FOUR,
+    FIVE(5),
 
-    FIVE,
+    SIX(6),
 
-    SIX,
+    SEVEN(7),
 
-    SEVEN,
+    EIGHT(8),
 
-    EIGHT,
+    NINE(9),
 
-    NINE,
+    TEN(10),
 
-    TEN,
+    JACK(10),
 
-    JACK,
+    QUEEN(10),
 
-    QUEEN,
-    
-    KING
+    KING(10),
+
+    ACE(1);
+
+    private final Integer value;
+
+    Figure(final Integer value) {
+        this.value = value;
+    }
 }

@@ -1,14 +1,51 @@
-package players;
+package es.ulpgc.players;
 
-import deck.BlackJackCard;
+import es.ulpgc.deck.BlackJackCard;
+import es.ulpgc.deck.Figure;
 
-import java.util.HashSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class PlayerAbstract {
 
-    private final HashSet<BlackJackCard> cards = new HashSet<>();
+    private final String name;
 
-    public abstract Boolean hasBlackJack();
+    private final Set<BlackJackCard> cards;
+
+    public PlayerAbstract(final String name,
+                          final Set<BlackJackCard> cards) {
+        this.name = name;
+        this.cards = new HashSet<>(cards);
+    }
+
+    public Boolean hasBlackJack() {
+        Integer sum = cards.stream()
+                .map(BlackJackCard::getFigure)
+                .mapToInt(Figure::getValue)
+                .filter(Objects::nonNull)
+                .sum();
+
+        List<Integer> aces = cards.stream()
+                .map(BlackJackCard::getFigure)
+                .mapToInt(Figure::getValue)
+                .filter(Objects::isNull)
+                .boxed()
+                .collect(Collectors.toList());
+
+        List<Integer> totalSums = Arrays.asList(sum);
+
+        aces.forEach(a -> totalSums.forEach(
+                        s -> {
+                            Integer s1 = s + 1;
+                            Integer s2 = s + 11;
+                            totalSums.remove(s);
+                            totalSums.add(s1);
+                            totalSums.add(s2);
+                        }
+                )
+        );
+        return totalSums.contains(21);
+    }
 
     public void addCard(BlackJackCard card) {
         this.cards.add(card);
