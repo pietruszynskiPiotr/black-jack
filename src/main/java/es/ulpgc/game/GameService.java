@@ -13,6 +13,23 @@ import java.util.List;
 @Service
 public class GameService {
 
+//    public PlayerAbstract[] getWinners(Player player1, Player player2, Player player3, Croupier croupier, Deck deck) {
+//        List<PlayerAbstract> players = List.of(player1, player2, player3, croupier);
+//        List<BlackJackCard> cards = deck.getCards();
+//        List<PlayerAbstract> winners = new ArrayList<>();
+//        for (int i = 0; i < players.size(); i++) {
+//            PlayerAbstract player = players.get(i);
+//            if (!player.hasBlackJack()) {
+//                BlackJackCard card = cards.get(i);
+//                player.addCard(card);
+//            }
+//            if (player.hasBlackJack()) {
+//                winners.add(player);
+//            }
+//        }
+//        return winners.toArray(new PlayerAbstract[0]);
+//    }
+
     public PlayerAbstract[] getWinners(Player player1, Player player2, Player player3, Croupier croupier, Deck deck) {
         List<PlayerAbstract> players = List.of(player1, player2, player3, croupier);
         List<BlackJackCard> cards = deck.getCards();
@@ -27,9 +44,11 @@ public class GameService {
                 winners.add(player);
             }
         }
+
+
+
         return winners.toArray(new PlayerAbstract[0]);
     }
-
 
 
 }

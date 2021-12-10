@@ -46,6 +46,29 @@ public abstract class PlayerAbstract {
         );
         return totalSums.contains(21);
     }
+//
+//    public Boolean hasBlackJack() {
+//        return lessThanTweTwo() && hasWinnersCards();
+//    }
+
+    protected Boolean hasWinnersCards() {
+        return cards.stream()
+                .map(BlackJackCard::getFigure)
+//                .filter(f -> 10 == f.getValue() || f == Figure.ACE)
+//                .filter(f -> 10 == f.getValue() || 11 == f.getValue())
+                .mapToInt(Figure::getValue)
+                .filter(v -> v == 10 || v == 1)
+                .distinct()
+                .limit(2)
+                .count() == 2;
+    }
+
+    private Boolean lessThanTweTwo() {
+        return cards.stream()
+                .map(BlackJackCard::getFigure)
+                .mapToInt(Figure::getValue)
+                .sum()  < 22;
+    }
 
     public void addCard(BlackJackCard card) {
         this.cards.add(card);
