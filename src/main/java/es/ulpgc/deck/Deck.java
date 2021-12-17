@@ -7,7 +7,7 @@ public class Deck {
 
     private final List<BlackJackCard> cards;
 
-    public Deck(BlackJackCard[] cards) {
+    public Deck(final BlackJackCard[] cards) {
         this.cards = Arrays.asList(cards);
     }
 

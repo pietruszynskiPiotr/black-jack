@@ -4,11 +4,14 @@ import es.ulpgc.deck.BlackJackCard;
 
 import java.util.Set;
 
-final public class Croupier extends PlayerAbstract {
+public final class Croupier extends PlayerAbstract {
 
-    public Croupier(final String name,
-                    final Set<BlackJackCard> cards) {
-        super(name, cards);
+    public Croupier(final Set<BlackJackCard> cards) {
+        super(cards);
+    }
+
+    public void addCard(BlackJackCard card) {
+        this.cards.add(card);
     }
 
 }

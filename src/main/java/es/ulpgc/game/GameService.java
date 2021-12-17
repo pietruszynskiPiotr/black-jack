@@ -13,42 +13,32 @@ import java.util.List;
 @Service
 public class GameService {
 
-//    public PlayerAbstract[] getWinners(Player player1, Player player2, Player player3, Croupier croupier, Deck deck) {
-//        List<PlayerAbstract> players = List.of(player1, player2, player3, croupier);
-//        List<BlackJackCard> cards = deck.getCards();
-//        List<PlayerAbstract> winners = new ArrayList<>();
-//        for (int i = 0; i < players.size(); i++) {
-//            PlayerAbstract player = players.get(i);
-//            if (!player.hasBlackJack()) {
-//                BlackJackCard card = cards.get(i);
-//                player.addCard(card);
-//            }
-//            if (player.hasBlackJack()) {
-//                winners.add(player);
-//            }
-//        }
-//        return winners.toArray(new PlayerAbstract[0]);
-//    }
-
     public PlayerAbstract[] getWinners(Player player1, Player player2, Player player3, Croupier croupier, Deck deck) {
-        List<PlayerAbstract> players = List.of(player1, player2, player3, croupier);
+        List<PlayerAbstract> players = List.of(player1, player2, player3);
         List<BlackJackCard> cards = deck.getCards();
         List<PlayerAbstract> winners = new ArrayList<>();
-        for (int i = 0; i < players.size(); i++) {
-            PlayerAbstract player = players.get(i);
-            if (!player.hasBlackJack()) {
-                BlackJackCard card = cards.get(i);
-                player.addCard(card);
-            }
-            if (player.hasBlackJack()) {
-                winners.add(player);
-            }
-        }
-
-
-
+        addCardsToCroupier(croupier, cards);
+        findWinners(croupier, players, winners);
         return winners.toArray(new PlayerAbstract[0]);
     }
 
+    private void addCardsToCroupier(Croupier croupier, List<BlackJackCard> cards) {
+        int cardNumber = 0;
+        while (croupier.getPointsNumber() < 17) {
+            BlackJackCard card = cards.get(cardNumber);
+            croupier.addCard(card);
+            cardNumber++;
+        }
+    }
+
+    private void findWinners(Croupier croupier, List<PlayerAbstract> players, List<PlayerAbstract> winners) {
+        players.forEach(p -> {
+            if (p.hasBlackJack() && !croupier.hasBlackJack()) {
+                winners.add(p);
+            } else if (p.getPointsNumber() <= 21 && croupier.getPointsNumber() < p.getPointsNumber()) {
+                winners.add(p);
+            }
+        });
+    }
 
 }

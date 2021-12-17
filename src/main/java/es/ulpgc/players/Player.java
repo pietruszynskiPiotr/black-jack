@@ -4,11 +4,10 @@ import es.ulpgc.deck.BlackJackCard;
 
 import java.util.Set;
 
-final public class Player extends PlayerAbstract {
+public final class Player extends PlayerAbstract {
 
-    public Player(final String name,
-                  final Set<BlackJackCard> cards) {
-        super(name, cards);
+    public Player(final Set<BlackJackCard> cards) {
+        super(cards);
     }
 
 }
